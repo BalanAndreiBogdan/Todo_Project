@@ -66,7 +66,8 @@ form button:hover {
 }
 
 .trash-btn,
-.complete-btn {
+.complete-btn,
+.important-btn {
   background: white;
   color: #034f84;
   border: none;
@@ -74,19 +75,20 @@ form button:hover {
   cursor: pointer;
   font-size: 1rem;
 }
-.complete-btn {
+.complete-btn,
+.important-btn {
   background: #034f84;
-}
-
-.complete-btn {
   color: white;
 }
+
 .todo-item {
   padding: 0rem 0.5rem;
 }
 
 .fa-trash,
-.fa-check {
+.fa-check,
+.fa-solid,
+.fa-triangle-exclamation {
   pointer-events: none;
 }
 
@@ -98,6 +100,11 @@ form button:hover {
 .completed {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.important {
+  background: rgb(130, 19, 19);
+  color: white;
 }
 
 /*CUSTOM SELECTOR */

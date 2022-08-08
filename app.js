@@ -6,7 +6,7 @@ const filterOption = document.querySelector(".filter-todo");
 
 //Event Listeners
 //Un event Listener pe tot documentul care verifica daca pagina e
-//loaded si daca e executa functia pe care o punem dupa
+//loaded si daca e, executa functia pe care o punem dupa
 document.addEventListener("DOMContentLoaded", getTodos);
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteTodo);
@@ -14,33 +14,50 @@ filterOption.addEventListener("click", filterTodo);
 
 //Functions
 
+function required(inputtx) {
+  if (inputtx.value.length == 0) {
+    alert("Please insert something!");
+    return false;
+  }
+  return true;
+}
+
 function addTodo(e) {
   //Prevent natural behaviour
   e.preventDefault();
-  //Create todo div
-  const todoDiv = document.createElement("div");
-  todoDiv.classList.add("todo");
-  //Create list
-  const newTodo = document.createElement("li");
-  newTodo.innerText = todoInput.value;
-  //Save to local
-  saveLocalTodos(todoInput.value);
-  //
-  newTodo.classList.add("todo-item");
-  todoDiv.appendChild(newTodo);
-  todoInput.value = "";
-  //Create Completed Button
-  const completedButton = document.createElement("button");
-  completedButton.innerHTML = `<i class="fas fa-check"></i>`;
-  completedButton.classList.add("complete-btn");
-  todoDiv.appendChild(completedButton);
-  //Create trash button
-  const trashButton = document.createElement("button");
-  trashButton.innerHTML = `<i class="fas fa-trash"></i>`;
-  trashButton.classList.add("trash-btn");
-  todoDiv.appendChild(trashButton);
-  //attach final Todo
-  todoList.appendChild(todoDiv);
+  if (todoInput.value.length == 0) {
+    alert("Please insert something!");
+  } else {
+    //Create todo div
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todo");
+    //Create list
+    const newTodo = document.createElement("li");
+    newTodo.innerText = todoInput.value;
+    //Save to local
+    saveLocalTodos(todoInput.value);
+    //
+    newTodo.classList.add("todo-item");
+    todoDiv.appendChild(newTodo);
+    todoInput.value = "";
+    //Create Completed Button
+    const completedButton = document.createElement("button");
+    completedButton.innerHTML = `<i class="fas fa-check"></i>`;
+    completedButton.classList.add("complete-btn");
+    todoDiv.appendChild(completedButton);
+    //Create trash button
+    const trashButton = document.createElement("button");
+    trashButton.innerHTML = `<i class="fas fa-trash"></i>`;
+    trashButton.classList.add("trash-btn");
+    todoDiv.appendChild(trashButton);
+    //Create important button
+    const importantButton = document.createElement("button");
+    importantButton.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+    importantButton.classList.add("important-btn");
+    todoDiv.appendChild(importantButton);
+    //attach final Todo
+    todoList.appendChild(todoDiv);
+  }
 }
 
 function deleteTodo(e) {
@@ -61,6 +78,11 @@ function deleteTodo(e) {
     todo.classList.toggle("completed");
     console.log(todo);
   }
+  if (item.classList[0] === "important-btn") {
+    const todo = item.parentElement;
+    todo.classList.toggle("important");
+    console.log(todo);
+  }
 }
 
 function filterTodo(e) {
@@ -77,12 +99,20 @@ function filterTodo(e) {
           todo.style.display = "none";
         }
         break;
+      case "important":
+        if (todo.classList.contains("important")) {
+          todo.style.display = "flex";
+        } else {
+          todo.style.display = "none";
+        }
+        break;
       case "uncompleted":
         if (!todo.classList.contains("completed")) {
           todo.style.display = "flex";
         } else {
           todo.style.display = "none";
         }
+        break;
     }
   });
 }
@@ -136,6 +166,10 @@ function getTodos() {
     trashButton.innerHTML = `<i class="fas fa-trash"></i>`;
     trashButton.classList.add("trash-btn");
     todoDiv.appendChild(trashButton);
+    const importantButton = document.createElement("button");
+    importantButton.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+    importantButton.classList.add("important-btn");
+    todoDiv.appendChild(importantButton);
     //attach final Todo
     todoList.appendChild(todoDiv);
   });
